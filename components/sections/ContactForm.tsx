@@ -41,11 +41,11 @@ const initial: FormState = {
 
 // Servicios alineados con la sección Services
 const services = [
-  "Diagnóstico IA gratuito",
-  "Agente IA WhatsApp Starter",
-  "Agente IA WhatsApp Growth",
+  "Asesoría gratuita (45 min)",
+  "Agente IA a medida (con mi base de datos)",
+  "IA para Excel / CRM",
+  "Agente IA para WhatsApp",
   "Automatización de tareas administrativas",
-  "Asistente IA para documentos y equipo",
   "Solución IA a medida",
   "Aún no estoy seguro / Asesoría",
 ];

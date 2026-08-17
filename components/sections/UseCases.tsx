@@ -36,15 +36,15 @@ const industries: Industry[] = [
 ];
 
 const examples = [
+  "Consultar tu información contable o financiera con IA",
+  "Analizar candidatos y apoyar en captación de talento",
+  "Crear y analizar reportes en Excel con IA",
+  "Ordenar y consultar tu CRM en lenguaje natural",
   "Responder consultas frecuentes por WhatsApp",
-  "Registrar pedidos automáticamente",
-  "Enviar recordatorios a clientes",
-  "Ordenar leads comerciales",
-  "Crear reportes automáticos",
-  "Consultar documentos internos con IA",
-  "Dar seguimiento a clientes inactivos",
-  "Reducir tareas repetitivas en Excel",
-  "Centralizar solicitudes o consultas",
+  "Detectar oportunidades o riesgos en tus datos históricos",
+  "Registrar pedidos y dar seguimiento a clientes inactivos",
+  "Consultar documentos, políticas o manuales internos con IA",
+  "Centralizar solicitudes o consultas del equipo",
   "Notificar al equipo cuando llega un lead importante",
 ];
 

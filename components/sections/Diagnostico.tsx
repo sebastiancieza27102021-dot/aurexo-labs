@@ -17,32 +17,34 @@ const highlights = [
   {
     icon: Video,
     title: "Reunión por Google Meet",
-    desc: "30 a 45 minutos, en línea. Sin compromiso, sin tecnicismos.",
+    desc: "45 minutos, en línea. Sin compromiso, sin tecnicismos.",
   },
   {
     icon: Sparkles,
-    title: "Diagnóstico inicial",
-    desc: "Revisamos procesos, canales y tareas repetitivas de tu negocio.",
+    title: "Revisión de tu caso",
+    desc: "Vemos qué información tienes, qué procesos repites y dónde te ayudaría un agente de IA.",
   },
   {
     icon: CalendarClock,
-    title: "Propuesta clara",
-    desc: "Si hay encaje, te enviamos una propuesta con alcance, tiempos y precio.",
+    title: "Propuesta y precio a tu medida",
+    desc: "Si hay encaje, te enviamos una propuesta con alcance, tiempos y precio — recién ahí.",
   },
 ];
 
 export function Diagnostico() {
+  const hasMeetingLink = site.meetingLink.length > 0;
+
   return (
     <Section
       id="diagnostico"
-      eyebrow="Diagnóstico gratuito"
+      eyebrow="Asesoría gratuita"
       title={
         <>
-          Conversemos sobre los procesos{" "}
-          <span className="text-gradient-accent">que podrías automatizar</span>
+          Conversemos 45 minutos sobre{" "}
+          <span className="text-gradient-accent">lo que necesita tu empresa</span>
         </>
       }
-      description="Cuéntanos cómo trabaja hoy tu negocio. Te decimos con honestidad qué se puede automatizar y qué no — antes de cualquier propuesta o pago."
+      description="No tenemos una lista de precios porque cada empresa es distinta. Cuéntanos tu caso y te decimos con honestidad qué solución te conviene — antes de cualquier propuesta o pago."
     >
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Lo que incluye */}
@@ -76,7 +78,7 @@ export function Diagnostico() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-muted">Duración</span>
-                <span className="font-medium">30–45 min</span>
+                <span className="font-medium">45 min</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-muted">Costo</span>
@@ -108,11 +110,12 @@ export function Diagnostico() {
                   <CalendarClock className="size-6" />
                 </div>
                 <h3 className="mt-6 text-xl font-semibold tracking-tight sm:text-2xl">
-                  Reserva tu diagnóstico
+                  Reserva tu asesoría gratuita
                 </h3>
                 <p className="mx-auto mt-3 max-w-sm text-sm text-muted">
-                  Coordinemos por WhatsApp o por correo. Te responde una persona
-                  real, no un bot.
+                  {hasMeetingLink
+                    ? "Elige el horario que prefieras en el calendario. Te llega la confirmación y el link de Meet automáticamente."
+                    : "Coordinemos por WhatsApp o por correo el mejor horario. Te responde una persona real, no un bot."}
                 </p>
 
                 {/* Horarios */}
@@ -134,23 +137,37 @@ export function Diagnostico() {
                 </div>
 
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
+                  {hasMeetingLink && (
+                    <ButtonLink
+                      href={site.meetingLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="primary"
+                      size="lg"
+                      icon={<CalendarClock className="size-4" />}
+                    >
+                      Agendar en Google Calendar
+                    </ButtonLink>
+                  )}
                   <ButtonLink
-                    href={whatsappLink(whatsappMessages.diagnostico)}
+                    href={whatsappLink(whatsappMessages.asesoria)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    variant="whatsapp"
+                    variant={hasMeetingLink ? "secondary" : "whatsapp"}
                     size="lg"
                     icon={<MessageCircle className="size-4" />}
                   >
                     Agendar por WhatsApp
                   </ButtonLink>
-                  <ButtonLink href="#contacto" variant="secondary" size="lg">
-                    Llenar formulario
-                  </ButtonLink>
+                  {!hasMeetingLink && (
+                    <ButtonLink href="#contacto" variant="secondary" size="lg">
+                      Llenar formulario
+                    </ButtonLink>
+                  )}
                 </div>
 
                 <a
-                  href={mailto("Diagnóstico gratuito · Aurexo Labs")}
+                  href={mailto("Asesoría gratuita · Aurexo Labs")}
                   className="mt-5 inline-flex items-center gap-1.5 text-xs text-muted hover:text-foreground"
                 >
                   <Mail className="size-3.5" />

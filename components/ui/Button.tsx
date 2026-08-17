@@ -1,12 +1,13 @@
 "use client";
 
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type Variant = "primary" | "secondary" | "ghost" | "whatsapp";
 type Size = "sm" | "md" | "lg";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface CommonProps {
   variant?: Variant;
   size?: Size;
   icon?: ReactNode;
@@ -14,7 +15,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  "relative inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 " +
+  "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full font-medium transition-colors duration-200 " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 " +
   "focus-visible:ring-offset-background disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap";
 
@@ -36,6 +37,27 @@ const sizes: Record<Size, string> = {
   lg: "h-12 px-7 text-[15px]",
 };
 
+/** Diagonal light sweep shown on hover for the primary CTA. */
+function Sheen() {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+    />
+  );
+}
+
+const tapAnimation = {
+  whileHover: { scale: 1.03 },
+  whileTap: { scale: 0.97 },
+  transition: { type: "spring" as const, stiffness: 420, damping: 26 },
+};
+
+type ButtonProps = CommonProps & { children?: ReactNode } & Omit<
+    HTMLMotionProps<"button">,
+    keyof CommonProps | "children"
+  >;
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -50,20 +72,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     return (
-      <button
+      <motion.button
         ref={ref}
+        {...tapAnimation}
         className={cn(base, variants[variant], sizes[size], className)}
         {...props}
       >
-        {icon && <span className="inline-flex shrink-0">{icon}</span>}
-        <span>{children}</span>
-        {iconRight && <span className="inline-flex shrink-0">{iconRight}</span>}
-      </button>
+        {variant === "primary" && <Sheen />}
+        {icon && <span className="relative inline-flex shrink-0">{icon}</span>}
+        <span className="relative">{children}</span>
+        {iconRight && <span className="relative inline-flex shrink-0">{iconRight}</span>}
+      </motion.button>
     );
   }
 );
 
 Button.displayName = "Button";
+
+type ButtonLinkProps = CommonProps & { children?: ReactNode } & Omit<
+    HTMLMotionProps<"a">,
+    keyof CommonProps | "children"
+  >;
 
 /** Link-styled button — for <a> tags that should look like our buttons. */
 export function ButtonLink({
@@ -74,20 +103,17 @@ export function ButtonLink({
   className,
   children,
   ...props
-}: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-  variant?: Variant;
-  size?: Size;
-  icon?: ReactNode;
-  iconRight?: ReactNode;
-}) {
+}: ButtonLinkProps) {
   return (
-    <a
+    <motion.a
+      {...tapAnimation}
       className={cn(base, variants[variant], sizes[size], className)}
       {...props}
     >
-      {icon && <span className="inline-flex shrink-0">{icon}</span>}
-      <span>{children}</span>
-      {iconRight && <span className="inline-flex shrink-0">{iconRight}</span>}
-    </a>
+      {variant === "primary" && <Sheen />}
+      {icon && <span className="relative inline-flex shrink-0">{icon}</span>}
+      <span className="relative">{children}</span>
+      {iconRight && <span className="relative inline-flex shrink-0">{iconRight}</span>}
+    </motion.a>
   );
 }

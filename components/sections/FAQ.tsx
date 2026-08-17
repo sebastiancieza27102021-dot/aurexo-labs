@@ -13,8 +13,16 @@ interface Item {
 
 const items: Item[] = [
   {
+    q: "¿Cuánto cuesta un proyecto con Aurexo Labs?",
+    a: "Aún no publicamos una lista de precios fija: recién estamos construyendo Aurexo Labs y preferimos cotizar cada proyecto según su alcance real, en vez de forzarlo a un plan genérico. El precio se define después de conocer tu caso, directamente por WhatsApp o en la asesoría gratuita de 45 minutos.",
+  },
+  {
+    q: "¿Es seguro compartir la información de mi empresa?",
+    a: "Sí. Tu información se organiza en una base de datos privada de tu empresa. El agente de IA sólo responde con esos datos — no compartimos tu información con terceros ni la usamos para entrenar otros modelos.",
+  },
+  {
     q: "¿Cuánto demora una implementación?",
-    a: "Depende del alcance. Un Agente IA Starter para WhatsApp suele estar listo en 1 a 2 semanas. Las automatizaciones administrativas o asistentes de documentos pueden tomar entre 2 y 4 semanas. Te entregamos un cronograma claro después del diagnóstico.",
+    a: "Depende del alcance. Un Agente IA para WhatsApp suele estar listo en 1 a 2 semanas. Un agente IA a medida sobre tu propia base de datos, IA para Excel/CRM o automatizaciones más complejas pueden tomar entre 2 y 4 semanas. Te entregamos un cronograma claro después de la asesoría gratuita.",
   },
   {
     q: "¿Necesito conocimientos técnicos?",
@@ -22,23 +30,19 @@ const items: Item[] = [
   },
   {
     q: "¿Trabajan también con negocios pequeños?",
-    a: "Sí. Nuestro enfoque son MYPES y PYMES. Tenemos planes pensados para emprendedores, tiendas locales y servicios profesionales — no sólo para empresas grandes.",
+    a: "Sí. Nuestro enfoque son MYPES y PYMES — emprendedores, tiendas locales y servicios profesionales, no sólo empresas grandes.",
   },
   {
     q: "¿La IA puede adaptarse a mi negocio?",
-    a: "Sí. Cada implementación se personaliza con tus productos, tu tono, tus procesos y tu información. No usamos plantillas genéricas.",
-  },
-  {
-    q: "¿Qué incluye el mantenimiento mensual?",
-    a: "Monitoreo del agente, ajustes de prompt, mejoras según el uso real, soporte en español, pequeñas optimizaciones del flujo y reporte simple del desempeño.",
+    a: "Sí. Cada implementación se personaliza con tu información, tus productos, tu tono y tus procesos. No usamos plantillas genéricas.",
   },
   {
     q: "¿Puedo empezar sólo con un servicio?",
-    a: "Sí. Lo más común es empezar con el Agente IA para WhatsApp o con una automatización puntual. Luego puedes sumar otros servicios cuando tenga sentido.",
+    a: "Sí. Lo más común es empezar con el Agente IA para WhatsApp, con un agente IA a medida o con una automatización puntual. Luego puedes sumar otros servicios cuando tenga sentido.",
   },
   {
     q: "¿Qué pasa si no estoy seguro de qué necesito?",
-    a: "Para eso está el diagnóstico gratuito. Revisamos tus procesos, te decimos con honestidad qué se puede automatizar y qué no, y recién entonces evaluamos una propuesta.",
+    a: "Para eso está la asesoría gratuita de 45 minutos. Revisamos tu caso, te decimos con honestidad qué se puede automatizar y qué no, y recién entonces evaluamos una propuesta.",
   },
 ];
 

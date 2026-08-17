@@ -39,10 +39,11 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-12">
           {/* Brand */}
           <div className="sm:col-span-5">
-            <Logo />
+            <Logo size={52} />
             <p className="mt-4 max-w-sm text-sm text-muted">
-              Aurexo Labs ayuda a empresas a automatizar ventas, atención y
-              operaciones con inteligencia artificial aplicada.
+              Creamos agentes de IA a medida, entrenados con la información de
+              tu empresa, para RRHH, contabilidad, ventas, marketing y
+              operaciones.
             </p>
 
             <div className="mt-5 space-y-2 text-xs text-muted">
@@ -102,7 +103,7 @@ export function Footer() {
                   href="#diagnostico"
                   className="text-foreground/80 transition hover:text-foreground"
                 >
-                  Agenda un diagnóstico
+                  Agenda tu asesoría gratuita
                 </a>
               </li>
             </ul>

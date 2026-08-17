@@ -11,12 +11,33 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("#inicio");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Highlight the nav link for the section currently in view
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.replace("#", ""));
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   // Lock body scroll while the mobile menu is open
@@ -50,9 +71,21 @@ export function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-3.5 py-2 text-sm text-muted transition hover:text-foreground"
+              className={cn(
+                "relative rounded-full px-3.5 py-2 text-sm transition",
+                active === l.href
+                  ? "text-foreground"
+                  : "text-muted hover:text-foreground"
+              )}
             >
-              {l.label}
+              {active === l.href && (
+                <motion.span
+                  layoutId="nav-active-pill"
+                  className="absolute inset-0 rounded-full border border-border bg-white/[0.06]"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative">{l.label}</span>
             </a>
           ))}
         </nav>
@@ -65,7 +98,7 @@ export function Navbar() {
             size="sm"
             iconRight={<ArrowUpRight className="size-4" />}
           >
-            Agenda diagnóstico
+            Asesoría gratuita
           </ButtonLink>
         </div>
 
@@ -108,7 +141,7 @@ export function Navbar() {
                 className="mt-3 w-full"
                 iconRight={<ArrowUpRight className="size-4" />}
               >
-                Agenda diagnóstico gratuito
+                Agenda tu asesoría gratuita
               </ButtonLink>
             </nav>
           </motion.div>

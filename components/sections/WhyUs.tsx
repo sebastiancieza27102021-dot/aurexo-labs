@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   Target,
   HandHelping,
@@ -14,6 +13,7 @@ import {
 } from "lucide-react";
 import type { ComponentType } from "react";
 import { Section } from "@/components/ui/Section";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 interface Differentiator {
   icon: ComponentType<{ className?: string }>;
@@ -94,7 +94,7 @@ export function WhyUs() {
         {items.map((item, i) => {
           const Icon = item.icon;
           return (
-            <motion.div
+            <SpotlightCard
               key={item.title}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -109,7 +109,7 @@ export function WhyUs() {
                 {item.title}
               </h3>
               <p className="mt-2 text-sm text-muted">{item.description}</p>
-            </motion.div>
+            </SpotlightCard>
           );
         })}
       </div>

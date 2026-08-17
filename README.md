@@ -37,21 +37,21 @@ aurexo-labs/
 │  └─ sections/
 │     ├─ Navbar.tsx
 │     ├─ Hero.tsx
-│     ├─ Services.tsx          # Diagnóstico + WhatsApp Starter/Growth + 3 servicios
+│     ├─ Services.tsx          # Asesoría gratuita + Agentes IA a medida + IA Excel/CRM + WhatsApp + más
 │     ├─ WhyUs.tsx             # Por qué elegir Aurexo Labs
 │     ├─ Process.tsx           # Cómo trabajamos (4 pasos)
 │     ├─ UseCases.tsx          # Industrias + ejemplos concretos
-│     ├─ Diagnostico.tsx       # Agenda + horarios + WhatsApp
+│     ├─ Diagnostico.tsx       # Asesoría gratuita de 45 min — Google Calendar + WhatsApp
 │     ├─ ContactForm.tsx       # Formulario empresarial
 │     ├─ FAQ.tsx
 │     ├─ Footer.tsx
 │     └─ WhatsAppButton.tsx
 │
 ├─ lib/
-│  ├─ site.ts                  # Single source of truth — contacto, redes, links
+│  ├─ site.ts                  # Single source of truth — contacto, redes, links, meetingLink
 │  └─ utils.ts                 # cn() helper
 │
-└─ public/favicon.svg
+└─ public/logo-aurexo.png, favicon.ico, icon.png, apple-touch-icon.png, og.png
 ```
 
 ---
@@ -62,9 +62,20 @@ Toda la información de contacto, redes y links está en `lib/site.ts`. Edita un
 
 - `email`, `whatsappNumber`, `whatsappDisplay`, `city`, `hours`
 - `social.instagram` → visible
-- `social.linkedin`, `social.calendly` → vacíos → ocultos automáticamente en UI
+- `social.linkedin` → vacío → oculto automáticamente en UI
+- `meetingLink` → vacío → el botón de "Agendar en Google Calendar" no se muestra y el CTA cae de vuelta a WhatsApp/correo
 
-Cuando publiques LinkedIn o Calendly reales, sólo agrega la URL en `site.ts` y aparecerán solos en Footer, Hero y Diagnostico.
+Cuando publiques LinkedIn real, sólo agrega la URL en `site.ts` y aparecerá sola en el Footer.
+
+### Agendamiento de la asesoría gratuita (45 min por Meet)
+
+1. En Google Calendar, crea una página de **"Programación de citas"** (Appointment schedule) de 45 min.
+2. Copia el link público que te da Google Calendar.
+3. Pégalo en `lib/site.ts` → `meetingLink`.
+
+Con eso, cada vez que alguien reserve un horario, Google Calendar crea el
+Google Meet automáticamente y te notifica por correo a tu cuenta de Aurexo —
+no requiere backend propio.
 
 ---
 
@@ -95,15 +106,13 @@ Pasos:
 - Open Graph + Twitter Card.
 - Canonical apuntando a `https://www.aurexolabs.com`.
 - JSON-LD `Organization` con email, teléfono y ubicación.
-- Favicon SVG (escalable, brand-colored).
-
-Para una imagen OG real, agrega `public/og.png` (1200×630). El build no se rompe si no existe.
+- Favicon, icon, apple-touch-icon y og.png generados a partir del logo oficial.
 
 ---
 
 ## Diseño
 
-- Paleta: negro profundo (`#05060A`), grises oscuros, blanco, azul eléctrico (`#5B8CFF`) y violeta tecnológico (`#8B5CF6`).
+- Paleta: negro profundo (`#05060A`), grises oscuros, blanco, azul eléctrico (`#2F6BFF`) y violeta tecnológico (`#7C3AED`) — tomados del degradado del logo.
 - Tipografía: Inter (Google Fonts).
 - Estética: SaaS startup 2026 — inspirado en Vercel, Stripe, Notion, Linear, Framer.
 - Glassmorphism ligero, sombras suaves, animaciones discretas con Framer Motion.
@@ -125,6 +134,6 @@ npm run lint     # linter
 ## Pendientes (cuando los tengas listos)
 
 - Conectar `/api/leads` a Resend, Supabase o Sheets (ver sección anterior).
-- Publicar URL de LinkedIn y Calendly y agregarlas en `lib/site.ts`.
-- Agregar `public/og.png` (1200×630) para mejorar las redes sociales.
-- Subir `public/apple-touch-icon.png` para iOS.
+- Crear la página de "Programación de citas" en Google Calendar y agregar el
+  link en `lib/site.ts` → `meetingLink` (ver sección de agendamiento arriba).
+- Publicar URL de LinkedIn y agregarla en `lib/site.ts`.

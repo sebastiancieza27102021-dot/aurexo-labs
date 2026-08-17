@@ -15,13 +15,13 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(91, 140, 255, 0.18), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.10), transparent 60%);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47, 107, 255, 0.18), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(124, 58, 237, 0.10), transparent 60%);
     background-attachment: fixed;
   }
 
   ::selection {
-    background-color: rgba(91, 140, 255, 0.35);
+    background-color: rgba(47, 107, 255, 0.35);
     color: #fff;
   }
 }
@@ -46,14 +46,14 @@
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, #c8d3ff 50%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #c3d2ff 50%, #7c3aed 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-accent {
-    background: linear-gradient(135deg, #5b8cff 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #2f6bff 0%, #7c3aed 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -68,7 +68,7 @@
     inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(91, 140, 255, 0.5), rgba(139, 92, 246, 0.5));
+    background: linear-gradient(135deg, rgba(47, 107, 255, 0.5), rgba(124, 58, 237, 0.5));
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -92,7 +92,7 @@
   }
 
   .section {
-    @apply relative py-24 sm:py-32;
+    @apply relative scroll-mt-24 py-24 sm:py-32;
   }
 
   .badge {

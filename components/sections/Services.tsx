@@ -4,23 +4,35 @@ import { motion } from "framer-motion";
 import {
   MessageCircle,
   Workflow,
-  Bot,
   Sparkles,
   Check,
   ArrowUpRight,
   Gift,
-  Star,
+  Database,
+  Brain,
+  FileSpreadsheet,
+  Table2,
+  Users,
+  Calculator,
+  Megaphone,
+  TrendingUp,
+  ClipboardList,
+  UserSearch,
+  Lock,
+  FileText,
+  Bot,
 } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { whatsappLink, whatsappMessages } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /* ============================================================
-   1) Card de Diagnóstico — destacada y gratuita
+   1) Card de Asesoría — destacada y gratuita
    ============================================================ */
-function DiagnosticoCallout() {
+function AsesoriaCallout() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -35,25 +47,24 @@ function DiagnosticoCallout() {
           <div className="flex flex-wrap items-center gap-3">
             <span className="badge !text-emerald-300/90">
               <Gift className="size-3.5" />
-              Diagnóstico IA gratuito
+              Asesoría gratuita · 45 min
             </span>
             <span className="text-xs text-muted">Punto de partida recomendado</span>
           </div>
           <h3 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
-            Descubre qué tareas de tu negocio se pueden automatizar.
+            Cuéntanos qué necesitas y te proponemos la solución IA adecuada.
           </h3>
           <p className="mt-3 text-sm text-muted sm:text-base">
-            Analizamos tus procesos, canales de atención y tareas repetitivas
-            para detectar oportunidades reales de automatización con IA. Ideal
-            si quieres empezar con IA pero no sabes por dónde.
+            Cada negocio es distinto, por eso no tenemos una lista de precios
+            fija. En una llamada por Google Meet revisamos tu caso y recién
+            ahí te armamos una propuesta con alcance y precio a tu medida.
           </p>
           <ul className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
             {[
-              "Revisión inicial de procesos",
-              "Identificación de tareas repetitivas",
-              "Recomendación de soluciones aplicables",
-              "Priorización de oportunidades",
-              "Propuesta inicial según el alcance",
+              "Revisión de tus procesos e información",
+              "Identificación de oportunidades con IA",
+              "Recomendación del servicio adecuado",
+              "Propuesta y precio según tu alcance",
             ].map((it) => (
               <li key={it} className="flex items-start gap-2 text-foreground/85">
                 <Check className="mt-0.5 size-4 shrink-0 text-emerald-400" />
@@ -66,13 +77,13 @@ function DiagnosticoCallout() {
         <div className="sm:col-span-5">
           <div className="rounded-2xl border border-border bg-elevated/60 p-5">
             <div className="text-xs uppercase tracking-wider text-muted">
-              Inversión
+              Asesoría inicial
             </div>
             <div className="mt-1 text-3xl font-semibold tracking-tight">
               Gratis
             </div>
             <p className="mt-2 text-xs text-muted">
-              30–45 min, en línea. Sin compromiso, sin tecnicismos.
+              45 min por Google Meet. Sin compromiso, sin tecnicismos.
             </p>
             <ButtonLink
               href="#diagnostico"
@@ -81,10 +92,10 @@ function DiagnosticoCallout() {
               className="mt-5 w-full"
               iconRight={<ArrowUpRight className="size-4" />}
             >
-              Agenda un diagnóstico gratuito
+              Agenda tu asesoría gratuita
             </ButtonLink>
             <ButtonLink
-              href={whatsappLink(whatsappMessages.diagnostico)}
+              href={whatsappLink(whatsappMessages.asesoria)}
               target="_blank"
               rel="noopener noreferrer"
               variant="secondary"
@@ -102,214 +113,333 @@ function DiagnosticoCallout() {
 }
 
 /* ============================================================
-   2) Servicio principal: Agente IA para WhatsApp (2 planes)
+   Ilustración: fuentes de información convergiendo en el agente IA
    ============================================================ */
-interface WAPlan {
-  name: string;
-  tagline: string;
-  setup: string;
-  monthly: string;
-  features: string[];
-  ideal: string[];
-  popular?: boolean;
-  msg: string;
-}
+function AgentNetworkIllustration() {
+  const sources = [
+    { icon: FileText, y: 20 },
+    { icon: FileSpreadsheet, y: 60 },
+    { icon: MessageCircle, y: 100 },
+    { icon: Users, y: 140 },
+  ];
 
-const waPlans: WAPlan[] = [
-  {
-    name: "Starter",
-    tagline:
-      "Para negocios que quieren automatizar respuestas frecuentes y mejorar su atención inicial.",
-    setup: "S/ 700",
-    monthly: "S/ 250 / mes",
-    features: [
-      "Respuestas automáticas por WhatsApp",
-      "Preguntas frecuentes del negocio",
-      "Información de productos o servicios",
-      "Captura básica de datos del cliente",
-      "Derivación a humano cuando se necesite",
-      "Dashboard básico de conversaciones",
-      "Configuración inicial del prompt del negocio",
-      "Pruebas iniciales y ajustes básicos",
-    ],
-    ideal: [
-      "Tiendas y comercios",
-      "Restaurantes",
-      "Servicios profesionales",
-      "Consultorios",
-      "Negocios locales",
-      "Emprendedores",
-    ],
-    msg: whatsappMessages.agenteStarter,
-  },
-  {
-    name: "Growth",
-    tagline:
-      "Para empresas que quieren usar WhatsApp como canal real de ventas, seguimiento y gestión comercial.",
-    setup: "S/ 1,500",
-    monthly: "S/ 450 / mes",
-    features: [
-      "Todo lo del plan Starter",
-      "Seguimiento de prospectos",
-      "Registro de clientes y conversaciones",
-      "Campañas u ofertas controladas",
-      "Etiquetas o clasificación de clientes",
-      "Memoria básica por cliente",
-      "Reporte de conversaciones, leads o consultas",
-      "Mayor personalización del flujo comercial",
-      "Mejoras y ajustes mensuales del agente",
-    ],
-    ideal: [
-      "Distribuidores y mayoristas",
-      "Inmobiliarias",
-      "Clínicas",
-      "Empresas con equipo comercial",
-      "E-commerce",
-      "Negocios con alto volumen en WhatsApp",
-    ],
-    popular: true,
-    msg: whatsappMessages.agenteGrowth,
-  },
-];
-
-function PlanCard({ plan, idx }: { plan: WAPlan; idx: number }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: idx * 0.08 }}
-      className={cn(
-        "glass glass-hover relative flex h-full flex-col p-7",
-        plan.popular && "glow-ring border-accent/30"
-      )}
-    >
-      {plan.popular && (
-        <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-accent/40 bg-accent/15 px-3 py-1 text-[11px] font-medium text-accent backdrop-blur">
-          <Star className="size-3" /> Más popular
-        </span>
-      )}
-      <div className="flex items-center gap-3">
-        <span className="grid size-10 place-items-center rounded-xl border border-border bg-white/[0.04] text-accent">
-          <MessageCircle className="size-4" />
-        </span>
-        <div>
-          <div className="text-xs uppercase tracking-wider text-muted">
-            Agente IA WhatsApp
-          </div>
-          <div className="text-base font-semibold tracking-tight">
-            Plan {plan.name}
-          </div>
-        </div>
-      </div>
-
-      <p className="mt-4 text-sm text-muted">{plan.tagline}</p>
-
-      <div className="mt-6 rounded-xl border border-border bg-white/[0.02] p-4">
-        <div className="flex items-baseline justify-between">
-          <span className="text-xs text-muted">Implementación desde</span>
-          <span className="text-base font-semibold tracking-tight">
-            {plan.setup}
-          </span>
-        </div>
-        <div className="mt-1 flex items-baseline justify-between">
-          <span className="text-xs text-muted">Mantenimiento desde</span>
-          <span className="text-base font-semibold tracking-tight">
-            {plan.monthly}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-6">
-        <div className="text-xs font-semibold uppercase tracking-wider text-muted">
-          Incluye
-        </div>
-        <ul className="mt-3 space-y-2.5">
-          {plan.features.map((f) => (
-            <li key={f} className="flex items-start gap-2.5 text-sm">
-              <span className="mt-0.5 grid size-4 shrink-0 place-items-center rounded-full bg-white/[0.05] text-accent">
-                <Check className="size-3" />
-              </span>
-              <span className="text-foreground/85">{f}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="my-6 divider" />
-
-      <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-muted">
-          Ideal para
-        </div>
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {plan.ideal.map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-border bg-white/[0.03] px-2.5 py-1 text-[11px] text-foreground/80"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <ButtonLink
-        href={whatsappLink(plan.msg)}
-        target="_blank"
-        rel="noopener noreferrer"
-        variant={plan.popular ? "primary" : "secondary"}
-        size="md"
-        className="mt-7 w-full"
-        icon={<MessageCircle className="size-4" />}
+    <div className="relative h-32 w-full">
+      <svg
+        viewBox="0 0 600 160"
+        className="absolute inset-0 h-full w-full"
+        preserveAspectRatio="none"
+        aria-hidden
       >
-        Hablar por WhatsApp
-      </ButtonLink>
-    </motion.div>
-  );
-}
-
-function FeaturedWhatsApp() {
-  return (
-    <div className="mt-16">
-      <div className="mb-8 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
-        <div className="max-w-2xl">
-          <span className="badge mb-3">
-            <span className="size-1.5 rounded-full bg-accent shadow-glow" />
-            Servicio principal
-          </span>
-          <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Agente IA para WhatsApp
-          </h3>
-          <p className="mt-2 text-sm text-muted sm:text-base">
-            Responde clientes, captura datos y ayuda a vender incluso cuando tu
-            equipo está ocupado. Dos planes para que empieces donde mejor te
-            convenga.
-          </p>
-        </div>
-        <ButtonLink
-          href={whatsappLink(whatsappMessages.agenteWhatsapp)}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="ghost"
-          size="sm"
-          iconRight={<ArrowUpRight className="size-4" />}
-        >
-          Preguntar por planes
-        </ButtonLink>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {waPlans.map((p, i) => (
-          <PlanCard key={p.name} plan={p} idx={i} />
+        <defs>
+          <linearGradient id="flow-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#2F6BFF" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#7C3AED" stopOpacity="0.9" />
+          </linearGradient>
+        </defs>
+        {sources.map((s, i) => (
+          <motion.path
+            key={i}
+            d={`M60,${s.y} C300,${s.y} 300,80 540,80`}
+            fill="none"
+            stroke="url(#flow-grad)"
+            strokeWidth="1.5"
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.12 * i, ease: "easeInOut" }}
+          />
         ))}
-      </div>
+      </svg>
+
+      {sources.map((s, i) => {
+        const Icon = s.icon;
+        return (
+          <div
+            key={i}
+            className="absolute grid size-8 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg border border-border bg-elevated text-muted"
+            style={{ left: "10%", top: `${(s.y / 160) * 100}%` }}
+          >
+            <Icon className="size-3.5" />
+          </div>
+        );
+      })}
+
+      <motion.div
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-accent/40 bg-gradient-to-br from-accent to-accent-violet text-white shadow-glow"
+        style={{ left: "90%", top: "50%" }}
+      >
+        <Bot className="size-5" />
+      </motion.div>
     </div>
   );
 }
 
 /* ============================================================
-   3) Otros servicios (3 cards)
+   2) Servicio estrella: Agentes IA a medida (con tu propia base de datos)
+   ============================================================ */
+const departamentos = [
+  { icon: Calculator, label: "Contabilidad y finanzas" },
+  { icon: Users, label: "Recursos Humanos" },
+  { icon: Megaphone, label: "Marketing" },
+  { icon: TrendingUp, label: "Ventas" },
+  { icon: ClipboardList, label: "Administrativo" },
+  { icon: Workflow, label: "Operaciones" },
+  { icon: UserSearch, label: "Captación de talento" },
+];
+
+function FlagshipAgentesMedida() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5 }}
+      className="glass glow-ring glass-hover relative overflow-hidden p-7 sm:p-10"
+    >
+      <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-accent-violet/20 blur-3xl" />
+
+      <div className="relative grid gap-8 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <span className="badge mb-4">
+            <span className="size-1.5 rounded-full bg-accent shadow-glow" />
+            Servicio estrella
+          </span>
+          <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            Agentes IA a medida, entrenados con la información de tu empresa
+          </h3>
+          <p className="mt-4 text-sm text-muted sm:text-base">
+            Ordenamos la información de tu negocio en una base de datos propia
+            y segura, y te entregamos un agente de IA que la conoce a fondo.
+            Es como tener tu propio ChatGPT o Gemini, pero personalizado con
+            tu historial real — listo para responder consultas{" "}
+            <span className="text-foreground/90">descriptivas</span> ("¿qué
+            pasó con...?") y{" "}
+            <span className="text-foreground/90">prescriptivas</span> ("¿qué
+            deberíamos hacer con...?").
+          </p>
+          <p className="mt-3 text-sm text-muted sm:text-base">
+            Para tu equipo es como tener un asesor contable, financiero, de
+            RRHH o comercial disponible todo el tiempo — que responde en base
+            a la información real de tu empresa, no información genérica.
+          </p>
+
+          <div className="mt-6">
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted">
+              Aplica a cualquier área de tu empresa
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {departamentos.map((d) => {
+                const Icon = d.icon;
+                return (
+                  <span
+                    key={d.label}
+                    className="inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.03] px-3 py-1.5 text-xs text-foreground/85"
+                  >
+                    <Icon className="size-3.5 text-accent" />
+                    {d.label}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-start gap-2.5 rounded-xl border border-border bg-white/[0.02] p-4 text-xs text-muted">
+            <Lock className="mt-0.5 size-4 shrink-0 text-accent" />
+            Tu información se organiza en una base de datos privada de tu
+            empresa. El agente sólo responde con esa información — no la
+            compartimos ni la usamos para entrenar otros modelos.
+          </div>
+
+          <ButtonLink
+            href={whatsappLink(whatsappMessages.agenteMedida)}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="primary"
+            size="md"
+            className="mt-7"
+            icon={<MessageCircle className="size-4" />}
+          >
+            Conversar sobre mi caso
+          </ButtonLink>
+        </div>
+
+        <div className="lg:col-span-5">
+          <div className="glass h-full p-5">
+            <AgentNetworkIllustration />
+            <div className="flex items-center gap-2 text-xs font-medium text-muted">
+              <Brain className="size-3.5 text-accent-violet" />
+              Ejemplos de consultas al agente
+            </div>
+            <ul className="mt-4 space-y-3">
+              {[
+                "¿Cuáles fueron mis clientes más rentables el último trimestre?",
+                "¿Qué candidato encaja mejor con el perfil que buscamos?",
+                "¿Qué campaña de marketing tuvo mejor retorno este año?",
+                "¿Qué productos deberíamos reponer según la rotación histórica?",
+                "¿Cómo vienen mis gastos operativos comparados con el mes pasado?",
+              ].map((q) => (
+                <li
+                  key={q}
+                  className="flex items-start gap-2.5 rounded-xl border border-border bg-white/[0.02] p-3 text-sm text-foreground/85"
+                >
+                  <Database className="mt-0.5 size-4 shrink-0 text-accent" />
+                  {q}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ============================================================
+   Ilustración: grilla de hoja de cálculo "tocada" por la IA
+   ============================================================ */
+const hotCells = new Set(["0-5", "1-2", "1-4", "2-1", "3-3"]);
+
+function SpreadsheetIllustration() {
+  const cols = 6;
+  const rows = 4;
+
+  return (
+    <div className="grid grid-cols-6 gap-1.5">
+      {Array.from({ length: rows }).flatMap((_, r) =>
+        Array.from({ length: cols }).map((_, c) => {
+          const key = `${r}-${c}`;
+          const isHot = hotCells.has(key);
+          return (
+            <motion.div
+              key={key}
+              initial={{ opacity: 0, scale: 0.6 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: (r * cols + c) * 0.02 }}
+              className={cn(
+                "aspect-square overflow-hidden rounded-md border",
+                isHot
+                  ? "border-accent-violet/50 bg-accent-violet/15"
+                  : "border-border bg-white/[0.02]"
+              )}
+            >
+              {isHot && (
+                <motion.div
+                  animate={{ opacity: [0.35, 1, 0.35] }}
+                  transition={{
+                    duration: 1.8,
+                    repeat: Infinity,
+                    delay: (r + c) * 0.15,
+                  }}
+                  className="h-full w-full bg-accent-violet/40"
+                />
+              )}
+            </motion.div>
+          );
+        })
+      )}
+    </div>
+  );
+}
+
+/* ============================================================
+   3) IA para Excel y CRM
+   ============================================================ */
+function ExcelCrmService() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: 0.08 }}
+      className="glass glass-hover relative overflow-hidden p-7 sm:p-10"
+    >
+      <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent-violet/15 blur-3xl" />
+
+      <div className="relative grid gap-8 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <span className="badge mb-4">
+            <span className="size-1.5 rounded-full bg-accent-violet shadow-glow-violet" />
+            IA dentro de tus herramientas
+          </span>
+          <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            IA para Excel y CRM
+          </h3>
+          <p className="mt-4 text-sm text-muted sm:text-base">
+            Un copiloto de IA para tus hojas de cálculo y tu CRM — similar a
+            los complementos de IA de ChatGPT o Claude para Excel. Analiza,
+            modifica y crea sobre libros existentes o desde cero: fórmulas,
+            reportes, cruces de información y limpieza de datos, sin que
+            tengas que hacerlo manualmente.
+          </p>
+
+          <ul className="mt-6 grid gap-2.5 text-sm sm:grid-cols-2">
+            {[
+              "Analizar y explicar un Excel existente",
+              "Crear reportes y dashboards desde cero",
+              "Limpiar, ordenar y cruzar bases de datos",
+              "Fórmulas y macros generadas por IA",
+              "Organizar y analizar tu información en el CRM",
+              "Detectar oportunidades o riesgos en tus datos",
+            ].map((it) => (
+              <li key={it} className="flex items-start gap-2.5 text-foreground/85">
+                <Check className="mt-0.5 size-4 shrink-0 text-accent-violet" />
+                {it}
+              </li>
+            ))}
+          </ul>
+
+          <ButtonLink
+            href={whatsappLink(whatsappMessages.excelCrm)}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="secondary"
+            size="md"
+            className="mt-7"
+            icon={<MessageCircle className="size-4" />}
+          >
+            Conversar sobre mi caso
+          </ButtonLink>
+        </div>
+
+        <div className="lg:col-span-5">
+          <div className="glass h-full p-5">
+            <SpreadsheetIllustration />
+            <div className="mt-5 flex items-center gap-2 text-xs font-medium text-muted">
+              <Table2 className="size-3.5 text-accent-violet" />
+              Ideal si tu equipo usa
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {[
+                "Excel / Google Sheets",
+                "CRM comercial",
+                "Reportes mensuales",
+                "Bases de clientes",
+                "Control de inventario",
+                "Planillas financieras",
+              ].map((t) => (
+                <span
+                  key={t}
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.03] px-3 py-1.5 text-xs text-foreground/85"
+                >
+                  <FileSpreadsheet className="size-3.5 text-accent-violet" />
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ============================================================
+   4) Otros servicios (3 cards, sin precios)
    ============================================================ */
 interface OtherService {
   icon: ComponentType<{ className?: string }>;
@@ -317,58 +447,44 @@ interface OtherService {
   tagline: string;
   description: string;
   examples: string[];
-  pricing: ReactNode;
+  ctaLabel: string;
   ctaHref: string;
   ctaTarget?: string;
 }
 
 const otherServices: OtherService[] = [
   {
+    icon: MessageCircle,
+    name: "Agente IA para WhatsApp",
+    tagline:
+      "Responde clientes, captura datos y ayuda a vender incluso cuando tu equipo está ocupado.",
+    description:
+      "Configuramos un agente que atiende tu WhatsApp con el tono y la información de tu negocio: responde preguntas frecuentes, deriva a un humano cuando corresponde y da seguimiento a tus clientes.",
+    examples: [
+      "Respuestas automáticas por WhatsApp",
+      "Información de productos o servicios",
+      "Captura de datos y seguimiento de prospectos",
+      "Derivación a un humano cuando se necesite",
+    ],
+    ctaLabel: "Preguntar por el agente",
+    ctaHref: whatsappLink(whatsappMessages.agenteWhatsapp),
+    ctaTarget: "_blank",
+  },
+  {
     icon: Workflow,
     name: "Automatización de tareas administrativas",
     tagline:
       "Automatizamos Excel, reportes, correos, registros, PDFs y tareas repetitivas.",
     description:
-      "Creamos flujos que reducen trabajo manual en tareas administrativas, comerciales u operativas (back-office). Conectamos formularios, hojas de cálculo, correos, documentos y notificaciones para que la información fluya ordenada.",
+      "Creamos flujos que reducen trabajo manual en tareas administrativas, comerciales u operativas (back-office). Conectamos formularios, hojas de cálculo, correos, documentos y notificaciones.",
     examples: [
       "Formulario a Google Sheets",
       "Registro automático de pedidos",
-      "Reportes semanales",
-      "Alertas internas por correo",
+      "Reportes y alertas automáticas",
       "Lectura o extracción de datos de PDFs",
-      "Recordatorios automáticos",
     ],
-    pricing: (
-      <>
-        Desde <span className="font-semibold text-foreground">S/ 1,000</span> por flujo
-        <span className="block text-xs text-muted">+ S/ 350 / mes de mantenimiento</span>
-      </>
-    ),
+    ctaLabel: "Solicitar propuesta",
     ctaHref: whatsappLink(whatsappMessages.automatizacion),
-    ctaTarget: "_blank",
-  },
-  {
-    icon: Bot,
-    name: "Asistente IA para documentos y equipo",
-    tagline:
-      "Tu equipo consulta catálogos, precios, políticas o manuales en segundos.",
-    description:
-      "Creamos asistentes internos que responden usando información propia de la empresa: documentos, catálogos, políticas, manuales, PDFs, Excels, procesos internos o bases de conocimiento.",
-    examples: [
-      "Asistente para equipo comercial",
-      "Consulta de catálogo y precios",
-      "Asistente para políticas internas",
-      "Procedimientos operativos",
-      "Onboarding y capacitación interna",
-      "Búsqueda de documentos frecuentes",
-    ],
-    pricing: (
-      <>
-        Desde <span className="font-semibold text-foreground">S/ 1,800</span> implementación
-        <span className="block text-xs text-muted">+ S/ 600 / mes de mantenimiento</span>
-      </>
-    ),
-    ctaHref: whatsappLink(whatsappMessages.asistente),
     ctaTarget: "_blank",
   },
   {
@@ -377,20 +493,14 @@ const otherServices: OtherService[] = [
     tagline:
       "Diseñamos automatizaciones personalizadas según el proceso de tu empresa.",
     description:
-      "Para empresas que necesitan una solución específica: integración entre herramientas, dashboard interno, flujo personalizado o un sistema ligero con IA.",
+      "Para empresas que necesitan algo específico: integración entre herramientas, un flujo comercial particular o un sistema interno ligero potenciado con IA.",
     examples: [
       "Integraciones entre sistemas",
       "Dashboards internos",
       "Flujos comerciales personalizados",
-      "Sistemas internos ligeros",
       "Procesos especiales de atención",
-      "Automatizaciones operativas con IA",
     ],
-    pricing: (
-      <>
-        <span className="font-semibold text-foreground">Cotización</span> según alcance
-      </>
-    ),
+    ctaLabel: "Contarnos mi caso",
     ctaHref: whatsappLink(whatsappMessages.custom),
     ctaTarget: "_blank",
   },
@@ -405,12 +515,13 @@ function OtherServiceCard({
 }) {
   const Icon = service.icon;
   return (
-    <motion.div
+    <SpotlightCard
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: idx * 0.08 }}
-      className="glass glass-hover group flex h-full flex-col p-7"
+      spotlightColor="rgba(124,58,237,0.16)"
+      className="glass glass-hover flex h-full flex-col p-7"
     >
       <div className="grid size-12 place-items-center rounded-xl border border-border bg-white/[0.04] text-accent-violet">
         <Icon className="size-5" />
@@ -436,10 +547,7 @@ function OtherServiceCard({
         </ul>
       </div>
 
-      <div className="my-6 divider" />
-
-      <div className="mt-auto space-y-4">
-        <div className="text-sm text-muted">{service.pricing}</div>
+      <div className="mt-auto pt-6">
         <ButtonLink
           href={service.ctaHref}
           target={service.ctaTarget}
@@ -447,12 +555,14 @@ function OtherServiceCard({
           variant="secondary"
           size="sm"
           className="w-full"
-          iconRight={<ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
+          iconRight={
+            <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          }
         >
-          Solicitar propuesta
+          {service.ctaLabel}
         </ButtonLink>
       </div>
-    </motion.div>
+    </SpotlightCard>
   );
 }
 
@@ -470,11 +580,14 @@ export function Services() {
           <span className="text-gradient-accent">reales de tu negocio</span>
         </>
       }
-      description="Desde un diagnóstico gratuito hasta soluciones a medida. Cada servicio resuelve un problema concreto, con precios claros y alcance definido."
+      description="Desde una asesoría gratuita hasta agentes de IA entrenados con tu propia información. Cada servicio se cotiza según tu alcance — sin listas de precios genéricas."
     >
-      <DiagnosticoCallout />
+      <AsesoriaCallout />
 
-      <FeaturedWhatsApp />
+      <div className="mt-16 space-y-6">
+        <FlagshipAgentesMedida />
+        <ExcelCrmService />
+      </div>
 
       <div className="mt-16">
         <div className="mb-8 max-w-2xl">
@@ -483,11 +596,12 @@ export function Services() {
             Más servicios
           </span>
           <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Más allá de WhatsApp
+            Otras formas en que te podemos ayudar
           </h3>
           <p className="mt-2 text-sm text-muted sm:text-base">
-            Si lo que necesitas es ordenar tareas internas o consultar
-            información dispersa, tenemos servicios pensados para eso.
+            Si lo que necesitas es ordenar tareas internas, atender por
+            WhatsApp o resolver algo puntual, también tenemos servicios
+            pensados para eso.
           </p>
         </div>
 
@@ -500,9 +614,10 @@ export function Services() {
 
       {/* Nota de precios */}
       <p className="mx-auto mt-10 max-w-3xl text-center text-xs text-muted">
-        Los precios mostrados son referenciales y pueden variar según el alcance,
-        integraciones, volumen de uso, cantidad de usuarios, canales conectados y
-        complejidad del proceso. El precio final se define después del diagnóstico.
+        No publicamos precios fijos: recién estamos construyendo Aurexo Labs y
+        cada solución depende del alcance, la información a integrar y los
+        objetivos de tu empresa. Coordinamos la propuesta y el precio
+        directamente por WhatsApp o en tu asesoría gratuita de 45 minutos.
       </p>
     </Section>
   );

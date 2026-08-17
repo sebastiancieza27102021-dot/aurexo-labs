@@ -1,17 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUpRight,
   MessageCircle,
-  Sparkles,
-  Cpu,
-  Zap,
-  BarChart3,
+  Calculator,
+  Users,
+  TrendingUp,
+  Megaphone,
   ListChecks,
+  Bot,
 } from "lucide-react";
+import type { ComponentType } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { whatsappLink } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 /* ---------- Fondo: grid + glows ---------- */
 function HeroBackground() {
@@ -24,8 +28,73 @@ function HeroBackground() {
   );
 }
 
-/* ---------- Mockup del panel (vista ilustrativa del producto) ---------- */
-function DashboardMockup() {
+/* ---------- Demo interactiva: agente IA respondiendo por área ---------- */
+interface DeptDemo {
+  key: string;
+  label: string;
+  icon: ComponentType<{ className?: string }>;
+  question: string;
+  answer: string;
+}
+
+const deptDemos: DeptDemo[] = [
+  {
+    key: "contabilidad",
+    label: "Contabilidad",
+    icon: Calculator,
+    question: "¿Cómo van mis gastos operativos vs. el mes pasado?",
+    answer:
+      "Subieron 12%, sobre todo por logística. Aquí el detalle por categoría y el mes con el que se compara.",
+  },
+  {
+    key: "rrhh",
+    label: "RRHH",
+    icon: Users,
+    question: "¿Qué candidato encaja mejor con el puesto de ventas?",
+    answer:
+      "Según el historial de contrataciones exitosas, 2 perfiles se acercan más al que mejor rindió en los últimos 12 meses.",
+  },
+  {
+    key: "ventas",
+    label: "Ventas",
+    icon: TrendingUp,
+    question: "¿Qué clientes están en riesgo de dejar de comprar?",
+    answer:
+      "5 clientes bajaron su frecuencia de compra más de 40% en 60 días. Te dejo la lista priorizada por valor histórico.",
+  },
+  {
+    key: "marketing",
+    label: "Marketing",
+    icon: Megaphone,
+    question: "¿Qué campaña tuvo mejor retorno este trimestre?",
+    answer:
+      "“Verano IA” tuvo el mejor retorno: generó más leads calificados que las otras tres campañas juntas.",
+  },
+];
+
+type Phase = "question" | "typing" | "answer";
+
+function AgentChatDemo() {
+  const [active, setActive] = useState(0);
+  const [phase, setPhase] = useState<Phase>("question");
+
+  useEffect(() => {
+    setPhase("question");
+    const toTyping = setTimeout(() => setPhase("typing"), 550);
+    const toAnswer = setTimeout(() => setPhase("answer"), 1250);
+    const toNext = setTimeout(
+      () => setActive((i) => (i + 1) % deptDemos.length),
+      3850
+    );
+    return () => {
+      clearTimeout(toTyping);
+      clearTimeout(toAnswer);
+      clearTimeout(toNext);
+    };
+  }, [active]);
+
+  const current = deptDemos[active];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -46,122 +115,106 @@ function DashboardMockup() {
             <span className="size-2.5 rounded-full bg-white/15" />
           </div>
           <span className="text-[11px] font-medium text-muted">
-            aurexo · panel de control · vista ilustrativa
+            aurexo · agente ia · ejemplo interactivo
           </span>
           <span className="size-4" />
         </div>
 
-        <div className="grid gap-3 p-4 sm:grid-cols-5">
-          {/* KPI cards (ejemplos del producto) */}
-          <div className="sm:col-span-3">
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: "Conversaciones IA", value: "—", icon: MessageCircle },
-                { label: "Tareas automatizadas", value: "—", icon: Zap },
-                { label: "Horas ahorradas", value: "—", icon: Cpu },
-              ].map((kpi) => (
-                <div
-                  key={kpi.label}
-                  className="rounded-xl border border-border bg-white/[0.02] p-3"
-                >
-                  <div className="flex items-center justify-between text-muted">
-                    <kpi.icon className="size-3.5" />
-                    <span className="text-[10px] font-medium text-muted">
-                      últimos 30 días
-                    </span>
-                  </div>
-                  <div className="mt-2 text-lg font-semibold tracking-tight">
-                    {kpi.value}
-                  </div>
-                  <div className="text-[10px] text-muted">{kpi.label}</div>
-                </div>
-              ))}
-            </div>
+        {/* Selector de área */}
+        <div className="flex flex-wrap gap-1.5 border-b border-border p-3">
+          {deptDemos.map((d, i) => {
+            const Icon = d.icon;
+            const isActive = i === active;
+            return (
+              <button
+                key={d.key}
+                type="button"
+                onClick={() => setActive(i)}
+                className={cn(
+                  "relative inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors",
+                  isActive
+                    ? "text-foreground"
+                    : "text-muted hover:text-foreground/80"
+                )}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="dept-active-pill"
+                    className="absolute inset-0 rounded-full border border-accent/30 bg-accent/10"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <Icon className="relative size-3.5" />
+                <span className="relative">{d.label}</span>
+              </button>
+            );
+          })}
+        </div>
 
-            {/* Chart */}
-            <div className="mt-3 rounded-xl border border-border bg-white/[0.02] p-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-medium">
-                  <BarChart3 className="size-3.5 text-accent" />
-                  Rendimiento del agente IA
-                </div>
-                <span className="text-[10px] text-muted">vista de ejemplo</span>
+        {/* Conversación */}
+        <div className="min-h-[220px] p-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.key}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="space-y-3"
+            >
+              {/* Pregunta del usuario */}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm border border-border bg-white/[0.04] px-4 py-2.5 text-[13px] text-foreground/90"
+              >
+                {current.question}
+              </motion.div>
+
+              {/* Respuesta del agente */}
+              <div className="flex items-start gap-2.5">
+                <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent/10 text-accent">
+                  <Bot className="size-3.5" />
+                </span>
+
+                <AnimatePresence mode="wait">
+                  {phase === "typing" ? (
+                    <motion.div
+                      key="typing"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center gap-1 rounded-2xl rounded-tl-sm border border-border bg-white/[0.03] px-4 py-3"
+                    >
+                      {[0, 1, 2].map((d) => (
+                        <motion.span
+                          key={d}
+                          animate={{ opacity: [0.3, 1, 0.3] }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            delay: d * 0.15,
+                          }}
+                          className="size-1.5 rounded-full bg-muted"
+                        />
+                      ))}
+                    </motion.div>
+                  ) : phase === "answer" ? (
+                    <motion.div
+                      key="answer"
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.35 }}
+                      className="max-w-[85%] rounded-2xl rounded-tl-sm border border-accent/20 bg-accent/5 px-4 py-2.5 text-[13px] text-foreground/90"
+                    >
+                      {current.answer}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
               </div>
-              <svg viewBox="0 0 300 100" className="mt-2 w-full">
-                <defs>
-                  <linearGradient
-                    id="hero-line-grad"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="0"
-                  >
-                    <stop offset="0%" stopColor="#5B8CFF" />
-                    <stop offset="100%" stopColor="#8B5CF6" />
-                  </linearGradient>
-                  <linearGradient
-                    id="hero-fill-grad"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#5B8CFF" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="#5B8CFF" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M0,80 C30,70 50,40 80,45 C110,50 140,20 170,25 C200,30 230,55 260,40 L300,30 L300,100 L0,100 Z"
-                  fill="url(#hero-fill-grad)"
-                />
-                <path
-                  d="M0,80 C30,70 50,40 80,45 C110,50 140,20 170,25 C200,30 230,55 260,40 L300,30"
-                  fill="none"
-                  stroke="url(#hero-line-grad)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </div>
-          </div>
-
-          {/* Activity feed (ejemplo) */}
-          <div className="rounded-xl border border-border bg-white/[0.02] p-3 sm:col-span-2">
-            <div className="flex items-center gap-2 text-xs font-medium">
-              <Sparkles className="size-3.5 text-accent-violet" />
-              Actividad reciente
-            </div>
-            <ul className="mt-3 space-y-3 text-[11px]">
-              {[
-                {
-                  who: "Agente WhatsApp",
-                  what: "respondió consulta de cliente",
-                },
-                {
-                  who: "Back-Office",
-                  what: "procesó registros del día",
-                },
-                {
-                  who: "Asistente IA",
-                  what: "entregó información del catálogo",
-                },
-                {
-                  who: "Agente WhatsApp",
-                  what: "derivó conversación al equipo",
-                },
-              ].map((row, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="mt-1 size-1.5 shrink-0 rounded-full bg-accent shadow-glow" />
-                  <div className="min-w-0">
-                    <div className="text-foreground/90">
-                      <span className="font-medium">{row.who}</span> {row.what}
-                    </div>
-                    <div className="text-muted">ejemplo</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
@@ -188,16 +241,19 @@ function DashboardMockup() {
 /* ---------- Hero ---------- */
 const trustBadges = [
   "Agencia peruana",
-  "Enfoque en MYPES y PYMES",
+  "IA entrenada con tu información",
+  "Datos privados y seguros",
   "Implementación guiada",
   "Atención por WhatsApp",
-  "Soluciones medibles",
   "Soporte en español",
 ];
 
 export function Hero() {
   return (
-    <section id="inicio" className="relative overflow-hidden pt-32 sm:pt-40">
+    <section
+      id="inicio"
+      className="relative scroll-mt-24 overflow-hidden pt-32 sm:pt-40"
+    >
       <HeroBackground />
 
       <div className="container-page">
@@ -211,7 +267,7 @@ export function Hero() {
               className="badge"
             >
               <span className="size-1.5 rounded-full bg-accent shadow-glow" />
-              Agencia peruana · IA aplicada para MYPES y PYMES
+              Agencia peruana · Agentes de IA a medida para MYPES y PYMES
             </motion.span>
 
             <motion.h1
@@ -220,8 +276,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-[60px]"
             >
-              Automatizamos atención, ventas y tareas repetitivas con{" "}
-              <span className="text-gradient-accent">Inteligencia Artificial</span>
+              Agentes de IA a medida que{" "}
+              <span className="text-gradient-accent">conocen tu negocio</span>
             </motion.h1>
 
             <motion.p
@@ -230,9 +286,11 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.12 }}
               className="mt-6 max-w-xl text-pretty text-base text-muted sm:text-lg"
             >
-              En Aurexo Labs ayudamos a MYPES y PYMES a responder más rápido,
-              ordenar procesos y ahorrar tiempo usando agentes IA,
-              automatizaciones y soluciones digitales a medida.
+              Organizamos la información de tu empresa en una base de datos
+              propia y creamos un agente de IA entrenado con ella — como tener
+              tu propio ChatGPT o Gemini, personalizado y seguro, listo para
+              responder consultas de RRHH, contabilidad, marketing, ventas u
+              operaciones.
             </motion.p>
 
             <motion.p
@@ -241,9 +299,9 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.16 }}
               className="mt-3 max-w-xl text-sm text-muted/80"
             >
-              Ideal para empresas que atienden por WhatsApp, trabajan con Excel,
-              manejan pedidos, reportes o información dispersa y quieren empezar
-              a usar IA de forma práctica.
+              También creamos agentes IA para WhatsApp, IA para Excel y CRM, y
+              automatizaciones a medida para negocios que quieren empezar a
+              usar IA de forma práctica.
             </motion.p>
 
             {/* CTAs */}
@@ -259,7 +317,7 @@ export function Hero() {
                 size="lg"
                 iconRight={<ArrowUpRight className="size-4" />}
               >
-                Agenda un diagnóstico gratuito
+                Agenda tu asesoría gratuita
               </ButtonLink>
               <ButtonLink
                 href={whatsappLink()}
@@ -295,7 +353,7 @@ export function Hero() {
 
           {/* Visual */}
           <div className="lg:col-span-5">
-            <DashboardMockup />
+            <AgentChatDemo />
           </div>
         </div>
       </div>

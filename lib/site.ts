@@ -9,9 +9,9 @@
 export const site = {
   name: "Aurexo Labs",
   domain: "https://www.aurexolabs.com",
-  tagline: "Automatizamos atención, ventas y tareas repetitivas con IA",
+  tagline: "Agentes de IA a medida, entrenados con la información de tu empresa",
   description:
-    "Agencia peruana de automatización con IA para MYPES y PYMES. Agentes IA para WhatsApp, automatizaciones administrativas, asistentes internos y soluciones a medida.",
+    "Agencia peruana de IA para MYPES y PYMES. Creamos agentes de IA a medida sobre la base de datos de tu empresa, IA para Excel y CRM, agentes IA para WhatsApp y automatizaciones a medida.",
   email: "contacto@aurexolabs.com",
 
   /** WhatsApp en formato internacional, sin "+" */
@@ -26,30 +26,35 @@ export const site = {
     saturday: "Sáb · 9:00 a.m. – 12:00 p.m.",
   },
 
+  /**
+   * Link público de "Programación de citas" de Google Calendar (o Calendly)
+   * para la asesoría gratuita de 45 min. Al reservar, Google Calendar crea el
+   * Meet y notifica automáticamente al correo de Aurexo — sin backend propio.
+   * Vacío → el CTA de agendar cae de vuelta a WhatsApp/correo.
+   */
+  meetingLink: "https://calendar.app.google/YBgmBo7fna6ERuxc6",
+
   social: {
     instagram: "https://www.instagram.com/aurexolabs.ia/",
     // Aún sin publicar — dejar como string vacío para ocultar en UI:
     linkedin: "",
-    calendly: "",
   },
 } as const;
 
 /** Mensajes pre-redactados para distintos CTAs de WhatsApp */
 export const whatsappMessages = {
   default:
-    "Hola, quiero agendar un diagnóstico gratuito para automatizar procesos en mi empresa.",
-  diagnostico:
-    "Hola, quiero agendar un diagnóstico gratuito para mi empresa.",
+    "Hola, quiero agendar una asesoría gratuita para ver cómo la IA puede ayudar a mi empresa.",
+  asesoria:
+    "Hola, quiero agendar la asesoría gratuita de 45 min para conocer cómo la IA puede ayudar a mi empresa.",
+  agenteMedida:
+    "Hola, quiero información sobre un Agente IA a medida entrenado con la información de mi empresa.",
+  excelCrm:
+    "Hola, quiero información sobre IA para Excel/CRM (analizar, modificar y crear en mis hojas de cálculo o CRM).",
   agenteWhatsapp:
     "Hola, quiero información sobre el Agente IA para WhatsApp de Aurexo Labs.",
-  agenteStarter:
-    "Hola, me interesa el plan Starter del Agente IA para WhatsApp.",
-  agenteGrowth:
-    "Hola, me interesa el plan Growth del Agente IA para WhatsApp.",
   automatizacion:
     "Hola, quiero automatizar tareas repetitivas en mi empresa.",
-  asistente:
-    "Hola, quiero información sobre el Asistente IA para documentos y equipo.",
   custom:
     "Hola, quiero conversar sobre una solución IA a medida para mi empresa.",
 } as const;

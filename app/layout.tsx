@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { site } from "@/lib/site";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import "./globals.css";
 
 /* =========================================================
@@ -9,25 +10,26 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.domain),
   title: {
     default:
-      "Aurexo Labs | Automatización e Inteligencia Artificial para Empresas",
+      "Aurexo Labs | Agentes de IA a medida para empresas",
     template: "%s · Aurexo Labs",
   },
   description:
-    "Automatizamos atención, ventas y procesos internos para MYPES y PYMES con agentes IA para WhatsApp, automatizaciones administrativas y asistentes internos.",
+    "Agentes de IA a medida entrenados con la información de tu empresa: consultas descriptivas y prescriptivas, IA para Excel y CRM, agentes IA para WhatsApp y automatizaciones para MYPES y PYMES.",
   keywords: [
-    "automatización empresarial Perú",
+    "agentes de IA a medida",
     "inteligencia artificial para empresas",
     "IA para MYPES",
     "IA para PYMES",
+    "agente IA con base de datos",
+    "asistente IA empresarial personalizado",
+    "IA para Excel",
+    "IA para CRM",
     "agentes IA WhatsApp",
     "automatización de procesos",
-    "automatización WhatsApp",
     "agencia de IA Perú",
     "automatización con inteligencia artificial",
-    "asistentes IA para empresas",
     "automatización de tareas administrativas",
-    "asistentes IA para documentos",
-    "automatización para negocios",
+    "asesoría gratuita IA",
     "Aurexo Labs",
   ],
   authors: [{ name: "Aurexo Labs" }],
@@ -39,29 +41,29 @@ export const metadata: Metadata = {
     locale: "es_PE",
     url: site.domain,
     siteName: "Aurexo Labs",
-    title: "Aurexo Labs | Automatización e IA para Empresas",
+    title: "Aurexo Labs | Agentes de IA a medida para empresas",
     description:
-      "Soluciones de inteligencia artificial y automatización para atención, ventas y operaciones de MYPES y PYMES.",
+      "Agentes de IA a medida entrenados con la información de tu empresa. IA para Excel y CRM, agentes IA para WhatsApp y automatizaciones para MYPES y PYMES.",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Aurexo Labs — Automatización e IA para empresas",
+        alt: "Aurexo Labs — Agentes de IA a medida para empresas",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aurexo Labs | Automatización e IA para Empresas",
+    title: "Aurexo Labs | Agentes de IA a medida para empresas",
     description:
-      "Agentes IA para WhatsApp, automatizaciones administrativas y asistentes internos.",
+      "Agentes IA entrenados con la información de tu empresa, IA para Excel/CRM y agentes IA para WhatsApp.",
     images: ["/og.png"],
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
     ],
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -135,6 +137,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <ScrollProgress />
         {children}
       </body>
     </html>
