@@ -110,7 +110,11 @@ const orgJsonLd = {
       availableLanguage: ["Spanish"],
     },
   ],
-  sameAs: [site.social.instagram].filter(Boolean),
+  sameAs: [
+    site.social.instagram,
+    site.social.tiktok,
+    site.social.linkedin,
+  ].filter(Boolean),
 };
 
 export default function RootLayout({

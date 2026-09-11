@@ -33,15 +33,17 @@ aurexo-labs/
 │  └─ api/leads/route.ts       # Endpoint de captura de leads
 │
 ├─ components/
-│  ├─ ui/                      # Logo, Button, Section
+│  ├─ ui/                      # Logo, Button, Section, TiltCard (3D), SpotlightCard, ScrollProgress, TikTokIcon
 │  └─ sections/
-│     ├─ Navbar.tsx
-│     ├─ Hero.tsx
-│     ├─ Services.tsx          # Asesoría gratuita + Agentes IA a medida + IA Excel/CRM + WhatsApp + más
+│     ├─ Navbar.tsx            # Scroll-spy + menú móvil
+│     ├─ Hero.tsx              # Demo interactiva del agente (chat por área)
+│     ├─ Services.tsx          # Asesoría + Agentes IA a medida + IA Excel/CRM + 6 servicios
+│     ├─ Security.tsx          # Compromisos de privacidad de datos
 │     ├─ WhyUs.tsx             # Por qué elegir Aurexo Labs
 │     ├─ Process.tsx           # Cómo trabajamos (4 pasos)
 │     ├─ UseCases.tsx          # Industrias + ejemplos concretos
-│     ├─ Diagnostico.tsx       # Asesoría gratuita de 45 min — Google Calendar + WhatsApp
+│     ├─ Integrations.tsx      # Marquee de herramientas compatibles
+│     ├─ Diagnostico.tsx       # Calendario de Google incrustado + WhatsApp
 │     ├─ ContactForm.tsx       # Formulario empresarial
 │     ├─ FAQ.tsx
 │     ├─ Footer.tsx
@@ -61,21 +63,40 @@ aurexo-labs/
 Toda la información de contacto, redes y links está en `lib/site.ts`. Edita un solo archivo para actualizar todo el sitio.
 
 - `email`, `whatsappNumber`, `whatsappDisplay`, `city`, `hours`
-- `social.instagram` → visible
+- `social.instagram`, `social.tiktok` → visibles
 - `social.linkedin` → vacío → oculto automáticamente en UI
-- `meetingLink` → vacío → el botón de "Agendar en Google Calendar" no se muestra y el CTA cae de vuelta a WhatsApp/correo
+- `meetingLink` / `meetingEmbedUrl` → vacíos → el calendario no se muestra y el CTA cae de vuelta a WhatsApp/correo
 
 Cuando publiques LinkedIn real, sólo agrega la URL en `site.ts` y aparecerá sola en el Footer.
 
-### Agendamiento de la asesoría gratuita (45 min por Meet)
+### Agendamiento automático de la asesoría (45 min por Meet)
 
-1. En Google Calendar, crea una página de **"Programación de citas"** (Appointment schedule) de 45 min.
-2. Copia el link público que te da Google Calendar.
-3. Pégalo en `lib/site.ts` → `meetingLink`.
+El calendario de Google va **incrustado en la propia página** (sección
+"Asesoría gratuita"). El cliente elige su horario sin salir del sitio y, al
+confirmar, Google Calendar hace todo solo:
 
-Con eso, cada vez que alguien reserve un horario, Google Calendar crea el
-Google Meet automáticamente y te notifica por correo a tu cuenta de Aurexo —
-no requiere backend propio.
+1. crea el evento en el calendario de Aurexo,
+2. genera el link de Google Meet de esa cita,
+3. envía al cliente el correo de confirmación con la fecha y el link de Meet,
+4. notifica a Aurexo por correo.
+
+No hace falta backend propio, credenciales ni variables de entorno.
+
+Dos campos en `lib/site.ts` lo controlan:
+
+| Campo | Para qué sirve |
+| --- | --- |
+| `meetingLink` | Link corto (`calendar.app.google/...`) — botón "Abrir calendario aparte" |
+| `meetingEmbedUrl` | Link largo con `?gv=true` — es el que se incrusta en el iframe |
+
+Si algún día cambias la página de citas en Google Calendar, actualiza **ambos**.
+Para obtener el link largo a partir del corto:
+
+```bash
+curl -s -L -o /dev/null -w "%{url_effective}\n" "https://calendar.app.google/TU_CODIGO"
+```
+
+Luego agrégale `?gv=true` al final (es el modo embed de Google).
 
 ---
 
@@ -134,6 +155,6 @@ npm run lint     # linter
 ## Pendientes (cuando los tengas listos)
 
 - Conectar `/api/leads` a Resend, Supabase o Sheets (ver sección anterior).
-- Crear la página de "Programación de citas" en Google Calendar y agregar el
-  link en `lib/site.ts` → `meetingLink` (ver sección de agendamiento arriba).
+  Hoy el formulario responde 200 pero sólo loguea el lead en consola — el
+  agendamiento por calendario sí funciona de punta a punta.
 - Publicar URL de LinkedIn y agregarla en `lib/site.ts`.

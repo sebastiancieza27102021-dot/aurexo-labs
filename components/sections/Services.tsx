@@ -21,11 +21,15 @@ import {
   Lock,
   FileText,
   Bot,
+  PhoneCall,
+  ScanLine,
+  GraduationCap,
 } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { whatsappLink, whatsappMessages } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -192,12 +196,14 @@ const departamentos = [
 
 function FlagshipAgentesMedida() {
   return (
-    <motion.div
+    <TiltCard
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5 }}
-      className="glass glow-ring glass-hover relative overflow-hidden p-7 sm:p-10"
+      intensity={4}
+      lift={10}
+      innerClassName="glass glow-ring glass-hover overflow-hidden p-7 sm:p-10"
     >
       <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-16 -right-16 h-64 w-64 rounded-full bg-accent-violet/20 blur-3xl" />
@@ -294,7 +300,7 @@ function FlagshipAgentesMedida() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </TiltCard>
   );
 }
 
@@ -351,12 +357,15 @@ function SpreadsheetIllustration() {
    ============================================================ */
 function ExcelCrmService() {
   return (
-    <motion.div
+    <TiltCard
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: 0.08 }}
-      className="glass glass-hover relative overflow-hidden p-7 sm:p-10"
+      intensity={4}
+      lift={10}
+      spotlightColor="rgba(124,58,237,0.16)"
+      innerClassName="glass glass-hover overflow-hidden p-7 sm:p-10"
     >
       <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-accent-violet/15 blur-3xl" />
 
@@ -434,12 +443,12 @@ function ExcelCrmService() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </TiltCard>
   );
 }
 
 /* ============================================================
-   4) Otros servicios (3 cards, sin precios)
+   4) Otros servicios (sin precios)
    ============================================================ */
 interface OtherService {
   icon: ComponentType<{ className?: string }>;
@@ -485,6 +494,57 @@ const otherServices: OtherService[] = [
     ],
     ctaLabel: "Solicitar propuesta",
     ctaHref: whatsappLink(whatsappMessages.automatizacion),
+    ctaTarget: "_blank",
+  },
+  {
+    icon: PhoneCall,
+    name: "Agente de voz IA para llamadas",
+    tagline:
+      "Contesta el teléfono, responde consultas y agenda citas sin que nadie deje de atender.",
+    description:
+      "Un agente que atiende llamadas con voz natural en español: informa horarios y precios, toma pedidos o reservas, agenda citas en tu calendario y te pasa la llamada cuando el caso lo amerita.",
+    examples: [
+      "Atención telefónica fuera de horario",
+      "Reserva y confirmación de citas",
+      "Toma de pedidos por teléfono",
+      "Derivación a una persona cuando se necesite",
+    ],
+    ctaLabel: "Preguntar por el agente de voz",
+    ctaHref: whatsappLink(whatsappMessages.agenteVoz),
+    ctaTarget: "_blank",
+  },
+  {
+    icon: ScanLine,
+    name: "Digitalización de documentos con IA",
+    tagline:
+      "Convierte facturas, boletas y contratos en datos listos para usar.",
+    description:
+      "La IA lee tus documentos —físicos o digitales— y extrae los datos a Excel, Sheets o tu sistema. Se acaba el digitado manual y los errores de transcripción.",
+    examples: [
+      "Facturas y boletas a Excel",
+      "Lectura de guías de remisión",
+      "Extracción de datos de contratos",
+      "Archivos históricos en papel a base de datos",
+    ],
+    ctaLabel: "Solicitar propuesta",
+    ctaHref: whatsappLink(whatsappMessages.documentos),
+    ctaTarget: "_blank",
+  },
+  {
+    icon: GraduationCap,
+    name: "Capacitación en IA para tu equipo",
+    tagline:
+      "Formamos a tu gente para que use IA en su trabajo diario, sin humo.",
+    description:
+      "Sesiones prácticas sobre los casos reales de tu empresa: cómo escribir buenas instrucciones, qué tareas conviene delegar a la IA y cuáles no, y cómo revisar sus resultados con criterio.",
+    examples: [
+      "Taller práctico por área",
+      "Casos de uso de tu propio negocio",
+      "Buenas prácticas y límites de la IA",
+      "Guía de uso para el equipo",
+    ],
+    ctaLabel: "Ver capacitación",
+    ctaHref: whatsappLink(whatsappMessages.capacitacion),
     ctaTarget: "_blank",
   },
   {
@@ -599,13 +659,13 @@ export function Services() {
             Otras formas en que te podemos ayudar
           </h3>
           <p className="mt-2 text-sm text-muted sm:text-base">
-            Si lo que necesitas es ordenar tareas internas, atender por
-            WhatsApp o resolver algo puntual, también tenemos servicios
-            pensados para eso.
+            Atención por WhatsApp y llamadas, papeleo que se digitaliza solo,
+            tareas internas ordenadas y tu equipo entrenado para usar IA.
+            Puedes empezar por uno y sumar el resto cuando tenga sentido.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {otherServices.map((s, i) => (
             <OtherServiceCard key={s.name} service={s} idx={i} />
           ))}

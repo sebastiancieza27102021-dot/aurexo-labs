@@ -45,7 +45,10 @@ const services = [
   "Agente IA a medida (con mi base de datos)",
   "IA para Excel / CRM",
   "Agente IA para WhatsApp",
+  "Agente de voz IA para llamadas",
+  "Digitalización de documentos con IA",
   "Automatización de tareas administrativas",
+  "Capacitación en IA para mi equipo",
   "Solución IA a medida",
   "Aún no estoy seguro / Asesoría",
 ];

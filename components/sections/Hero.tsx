@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import type { ComponentType } from "react";
 import { ButtonLink } from "@/components/ui/Button";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -106,7 +107,12 @@ function AgentChatDemo() {
       <div className="pointer-events-none absolute -left-6 -top-6 h-24 w-24 rounded-full bg-accent/40 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-accent-violet/40 blur-3xl" />
 
-      <div className="glass glow-ring relative overflow-hidden p-1">
+      <TiltCard
+        intensity={5}
+        lift={12}
+        spotlightColor={null}
+        innerClassName="glass glow-ring overflow-hidden p-1"
+      >
         {/* Window chrome */}
         <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
           <div className="flex items-center gap-1.5">
@@ -216,7 +222,7 @@ function AgentChatDemo() {
             </motion.div>
           </AnimatePresence>
         </div>
-      </div>
+      </TiltCard>
 
       {/* Floating chat bubble */}
       <motion.div

@@ -6,7 +6,9 @@ import {
   MapPin,
   Clock,
 } from "lucide-react";
+import type { ComponentType } from "react";
 import { Logo } from "@/components/ui/Logo";
+import { TikTokIcon } from "@/components/ui/TikTokIcon";
 import { site, whatsappLink, mailto, navLinks } from "@/lib/site";
 
 export function Footer() {
@@ -17,19 +19,25 @@ export function Footer() {
     site.social.instagram && {
       label: "Instagram",
       href: site.social.instagram,
-      icon: Instagram,
+      icon: Instagram as ComponentType<{ className?: string }>,
       color: "text-pink-400",
+    },
+    site.social.tiktok && {
+      label: "TikTok",
+      href: site.social.tiktok,
+      icon: TikTokIcon as ComponentType<{ className?: string }>,
+      color: "text-foreground",
     },
     site.social.linkedin && {
       label: "LinkedIn",
       href: site.social.linkedin,
-      icon: Linkedin,
+      icon: Linkedin as ComponentType<{ className?: string }>,
       color: "text-accent",
     },
   ].filter(Boolean) as {
     label: string;
     href: string;
-    icon: typeof Instagram;
+    icon: ComponentType<{ className?: string }>;
     color: string;
   }[];
 

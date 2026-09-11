@@ -34,8 +34,25 @@ export const site = {
    */
   meetingLink: "https://calendar.app.google/YBgmBo7fna6ERuxc6",
 
+  /**
+   * Misma página de citas en modo "embed" (`?gv=true`), para incrustarla en el
+   * sitio y que el cliente reserve sin salir de aurexolabs.com.
+   *
+   * Al confirmar, Google Calendar se encarga de todo automáticamente:
+   *  - crea el evento en el calendario de Aurexo,
+   *  - genera el link de Google Meet de esa cita,
+   *  - envía al cliente el correo de confirmación con fecha y link de Meet,
+   *  - avisa a Aurexo por correo.
+   *
+   * Es el link largo al que redirige `meetingLink`. Si algún día cambias la
+   * página de citas, actualiza ambos.
+   */
+  meetingEmbedUrl:
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3pINlFQilkFq8_1iZVuU-AViBaCo7r2fhRBrqnUpDM1b5yZ1UqIA1vUwHbeKt4Q-75zXmDWfEi?gv=true",
+
   social: {
     instagram: "https://www.instagram.com/aurexolabs.ia/",
+    tiktok: "https://www.tiktok.com/@aurexo.labs",
     // Aún sin publicar — dejar como string vacío para ocultar en UI:
     linkedin: "",
   },
@@ -53,6 +70,12 @@ export const whatsappMessages = {
     "Hola, quiero información sobre IA para Excel/CRM (analizar, modificar y crear en mis hojas de cálculo o CRM).",
   agenteWhatsapp:
     "Hola, quiero información sobre el Agente IA para WhatsApp de Aurexo Labs.",
+  agenteVoz:
+    "Hola, quiero información sobre el Agente de voz IA que atiende llamadas y agenda citas.",
+  documentos:
+    "Hola, quiero información sobre la digitalización de documentos con IA (facturas, boletas, contratos).",
+  capacitacion:
+    "Hola, quiero información sobre la capacitación en IA para mi equipo.",
   automatizacion:
     "Hola, quiero automatizar tareas repetitivas en mi empresa.",
   custom:

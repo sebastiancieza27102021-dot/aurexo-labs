@@ -17,6 +17,10 @@ const items: Item[] = [
     a: "Aún no publicamos una lista de precios fija: recién estamos construyendo Aurexo Labs y preferimos cotizar cada proyecto según su alcance real, en vez de forzarlo a un plan genérico. El precio se define después de conocer tu caso, directamente por WhatsApp o en la asesoría gratuita de 45 minutos.",
   },
   {
+    q: "¿Cómo agendo la asesoría y qué recibo después?",
+    a: "Eliges el horario directamente en el calendario de esta página. Al confirmar, la cita queda agendada automáticamente y te llega un correo con la fecha y el link de Google Meet de esa reunión — no tienes que esperar a que alguien te responda para tener tu hora reservada. Si prefieres coordinar por WhatsApp, también puedes.",
+  },
+  {
     q: "¿Es seguro compartir la información de mi empresa?",
     a: "Sí. Tu información se organiza en una base de datos privada de tu empresa. El agente de IA sólo responde con esos datos — no compartimos tu información con terceros ni la usamos para entrenar otros modelos.",
   },
