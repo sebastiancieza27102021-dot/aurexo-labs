@@ -100,24 +100,35 @@ Luego agrégale `?gv=true` al final (es el modo embed de Google).
 
 ---
 
-## Captura de leads en producción
+## Captura de leads
 
-El endpoint `/api/leads` viene listo con scaffolding (comentado) para:
+El endpoint `/api/leads` envía cada lead del formulario por correo usando
+**Resend**. No requiere instalar dependencias (usa `fetch` contra su API).
 
-| Opción | Cuándo usar |
-| --- | --- |
-| **Resend** | Quieres email directo a tu bandeja. La más rápida. |
-| **Formspree** | Cero código backend. Lo configuras desde su panel. |
-| **Supabase** | Necesitas almacenar y consultar leads. |
-| **Google Sheets** | Tu equipo ya trabaja sobre Sheets. |
+### Configuración
 
-Pasos:
-1. Copia `.env.example` a `.env.local` y llena las variables que vayas a usar.
-2. Abre `app/api/leads/route.ts` y descomenta el bloque correspondiente.
-3. Instala la librería (`npm i resend` / `@supabase/supabase-js`) si aplica.
+1. Copia `.env.example` a `.env.local` y llena `RESEND_API_KEY`, `LEADS_TO` y
+   `LEADS_FROM`.
+2. En Vercel, agrega esas mismas tres variables en
+   **Settings → Environment Variables** (entorno *Production*) y vuelve a
+   desplegar. Sin esto, en producción el formulario no envía nada.
 
-> Mientras no haya backend real, el form igual responde 200 pero su mensaje
-> de éxito invita explícitamente a usar WhatsApp o correo. No "simula" envío.
+> **El remitente importa.** Sin un dominio verificado en Resend sólo puedes
+> usar `onboarding@resend.dev`, y Resend únicamente entrega al correo dueño de
+> la cuenta. Para recibir en `contacto@aurexolabs.com` verifica el dominio
+> `aurexolabs.com` en Resend y usa `leads@aurexolabs.com` como `LEADS_FROM`.
+
+### Comportamiento
+
+| Situación | Respuesta | Qué ve el visitante |
+| --- | --- | --- |
+| `RESEND_API_KEY` sin configurar | `200 {ok:true, delivered:false}` | Éxito (sólo se loguea el lead) |
+| Correo enviado | `200 {ok:true, delivered:true}` | Éxito |
+| Resend rechaza el envío | `502 {error:"email_failed"}` | Error, con invitación a usar WhatsApp |
+
+El endpoint responde error a propósito cuando el correo falla: es preferible
+pedirle al visitante que escriba por WhatsApp a perder el lead en silencio.
+Ante un fallo, el lead igual queda escrito en los logs del servidor.
 
 ---
 
@@ -154,7 +165,8 @@ npm run lint     # linter
 
 ## Pendientes (cuando los tengas listos)
 
-- Conectar `/api/leads` a Resend, Supabase o Sheets (ver sección anterior).
-  Hoy el formulario responde 200 pero sólo loguea el lead en consola — el
-  agendamiento por calendario sí funciona de punta a punta.
+- Cargar `RESEND_API_KEY`, `LEADS_TO` y `LEADS_FROM` en las variables de
+  entorno de Vercel (en local ya funcionan vía `.env.local`).
+- Verificar el dominio `aurexolabs.com` en Resend para poder enviar desde
+  `leads@aurexolabs.com` y recibir en `contacto@aurexolabs.com`.
 - Publicar URL de LinkedIn y agregarla en `lib/site.ts`.
