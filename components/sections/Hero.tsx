@@ -15,6 +15,7 @@ import {
 import type { ComponentType } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { TiltCard } from "@/components/ui/TiltCard";
+import { NeuralField } from "@/components/ui/NeuralField";
 import { whatsappLink } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,10 @@ function HeroBackground() {
   return (
     <>
       <div className="pointer-events-none absolute inset-0 -z-10 bg-grid" />
+      {/* Malla 3D animada — la capa que da la lectura "futurista" */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <NeuralField className="absolute inset-0" opacity={0.5} />
+      </div>
       <div className="pointer-events-none absolute inset-x-0 -top-32 -z-10 mx-auto h-[520px] max-w-5xl rounded-full bg-accent/20 blur-[120px]" />
       <div className="pointer-events-none absolute right-0 top-40 -z-10 h-72 w-72 rounded-full bg-accent-violet/20 blur-[120px]" />
     </>
@@ -81,11 +86,13 @@ function AgentChatDemo() {
 
   useEffect(() => {
     setPhase("question");
-    const toTyping = setTimeout(() => setPhase("typing"), 550);
-    const toAnswer = setTimeout(() => setPhase("answer"), 1250);
+    const toTyping = setTimeout(() => setPhase("typing"), 600);
+    const toAnswer = setTimeout(() => setPhase("answer"), 1300);
+    // La respuesta queda ~4 s en pantalla: suficiente para leerla sin que el
+    // panel se sienta estancado.
     const toNext = setTimeout(
       () => setActive((i) => (i + 1) % deptDemos.length),
-      3850
+      5400
     );
     return () => {
       clearTimeout(toTyping);
@@ -165,7 +172,7 @@ function AgentChatDemo() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.18 }}
               className="space-y-3"
             >
               {/* Pregunta del usuario */}

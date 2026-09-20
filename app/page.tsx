@@ -6,6 +6,7 @@ import { WhyUs } from "@/components/sections/WhyUs";
 import { Process } from "@/components/sections/Process";
 import { UseCases } from "@/components/sections/UseCases";
 import { Integrations } from "@/components/sections/Integrations";
+import { CtaBand } from "@/components/sections/CtaBand";
 import { Diagnostico } from "@/components/sections/Diagnostico";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { FAQ } from "@/components/sections/FAQ";
@@ -43,6 +44,7 @@ export default function HomePage() {
       <Process />
       <UseCases />
       <Integrations />
+      <CtaBand />
       <Diagnostico />
       <ContactForm />
       <FAQ />
