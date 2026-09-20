@@ -27,19 +27,20 @@ export const site = {
   },
 
   /**
-   * Link público de "Programación de citas" de Google Calendar (o Calendly)
-   * para la asesoría gratuita de 45 min. Al reservar, Google Calendar crea el
-   * Meet y notifica automáticamente al correo de Aurexo — sin backend propio.
+   * Link público de "Programación de citas" de Google Calendar para la
+   * asesoría gratuita de 45 min. Vive en la cuenta `aurexolabs@gmail.com`
+   * (no en la personal), que es de donde Google toma el nombre y la foto que
+   * ve el cliente en la página de reserva.
    * Vacío → el CTA de agendar cae de vuelta a WhatsApp/correo.
    */
-  meetingLink: "https://calendar.app.google/YBgmBo7fna6ERuxc6",
+  meetingLink: "https://calendar.app.google/MFpnA3nbMBqXDsXL6",
 
   /**
    * Misma página de citas en modo "embed" (`?gv=true`), para incrustarla en el
    * sitio y que el cliente reserve sin salir de aurexolabs.com.
    *
    * Al confirmar, Google Calendar se encarga de todo automáticamente:
-   *  - crea el evento en el calendario de Aurexo,
+   *  - crea el evento en el calendario de `aurexolabs@gmail.com`,
    *  - genera el link de Google Meet de esa cita,
    *  - envía al cliente el correo de confirmación con fecha y link de Meet,
    *  - avisa a Aurexo por correo.
@@ -48,7 +49,7 @@ export const site = {
    * página de citas, actualiza ambos.
    */
   meetingEmbedUrl:
-    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3pINlFQilkFq8_1iZVuU-AViBaCo7r2fhRBrqnUpDM1b5yZ1UqIA1vUwHbeKt4Q-75zXmDWfEi?gv=true",
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2idETFmpJmUM5t3ADueaNbD9ATrKUAA9u80YQ08NUhF4zf4YlGZEDqjgDZScSsTrqvRCVxmyNQ?gv=true",
 
   social: {
     instagram: "https://www.instagram.com/aurexolabs.ia/",
