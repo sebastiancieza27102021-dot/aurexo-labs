@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { site } from "@/lib/site";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { MotionProvider } from "@/components/ui/MotionProvider";
 import "./globals.css";
 
 /* =========================================================
@@ -141,8 +142,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <ScrollProgress />
-        {children}
+        <MotionProvider>
+          <ScrollProgress />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );

@@ -76,14 +76,26 @@ export function NeuralField({
     resize();
 
     let angle = 0;
+    // Hacia dónde apunta el cursor (-0.5…0.5) y valor suavizado que seguimos.
+    let targetYaw = 0;
+    let targetPitch = 0;
+    let yaw = 0;
+    let pitch = 0;
 
     /** Proyección en perspectiva de un punto del cubo unitario al canvas. */
     const project = (n: Node3D) => {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      // Rotación sobre el eje Y — la que da la sensación de volumen.
-      const rx = n.x * cos - n.z * sin;
-      const rz = n.x * sin + n.z * cos;
+      // Giro propio + el aporte del cursor, sobre el eje Y.
+      const a = angle + yaw;
+      const cosA = Math.cos(a);
+      const sinA = Math.sin(a);
+      const rx = n.x * cosA - n.z * sinA;
+      let rz = n.x * sinA + n.z * cosA;
+
+      // Inclinación vertical según el cursor, sobre el eje X.
+      const cosP = Math.cos(pitch);
+      const sinP = Math.sin(pitch);
+      const ry = n.y * cosP - rz * sinP;
+      rz = n.y * sinP + rz * cosP;
 
       const fov = 2.6;
       const depth = fov / (fov + rz);
@@ -91,7 +103,7 @@ export function NeuralField({
 
       return {
         sx: width / 2 + rx * scale * depth,
-        sy: height / 2 + n.y * scale * depth,
+        sy: height / 2 + ry * scale * depth,
         depth,
       };
     };
@@ -147,6 +159,10 @@ export function NeuralField({
         if (n.z < -1 || n.z > 1) n.vz *= -1;
       }
       angle += 0.0012;
+      // Perseguimos el objetivo del cursor en vez de saltar a él: el retardo
+      // es lo que hace que la malla se sienta con peso y no elástica.
+      yaw += (targetYaw - yaw) * 0.045;
+      pitch += (targetPitch - pitch) * 0.045;
     };
 
     let raf = 0;
@@ -186,6 +202,19 @@ export function NeuralField({
     };
     window.addEventListener("resize", onResize);
 
+    // El cursor inclina la malla. Sólo con puntero fino: en táctil no hay
+    // hover, y encadenar esto al dedo se sentiría errático.
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const onPointerMove = (e: PointerEvent) => {
+      const nx = e.clientX / window.innerWidth - 0.5;
+      const ny = e.clientY / window.innerHeight - 0.5;
+      targetYaw = nx * 0.55;
+      targetPitch = ny * 0.32;
+    };
+    if (finePointer && !reduceMotion) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    }
+
     draw(); // primer frame, también el único si hay reduced-motion
 
     return () => {
@@ -193,6 +222,7 @@ export function NeuralField({
       io.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointerMove);
     };
   }, [density]);
 

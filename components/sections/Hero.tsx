@@ -30,6 +30,21 @@ function HeroBackground() {
       </div>
       <div className="pointer-events-none absolute inset-x-0 -top-32 -z-10 mx-auto h-[520px] max-w-5xl rounded-full bg-accent/20 blur-[120px]" />
       <div className="pointer-events-none absolute right-0 top-40 -z-10 h-72 w-72 rounded-full bg-accent-violet/20 blur-[120px]" />
+
+      {/*
+        Piso en perspectiva. El contenedor aporta la profundidad y el hijo se
+        tumba 74° sobre el eje X: eso convierte una cuadrícula plana en un
+        plano que se aleja hacia el horizonte.
+      */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[340px] overflow-hidden"
+        style={{ perspective: "340px" }}
+      >
+        <div
+          className="perspective-grid absolute inset-x-[-50%] bottom-0 h-[620px] origin-bottom"
+          style={{ transform: "rotateX(74deg)" }}
+        />
+      </div>
     </>
   );
 }

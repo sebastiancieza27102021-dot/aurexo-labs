@@ -167,3 +167,35 @@
     animation: none;
   }
 }
+
+/* =========================================================
+   REJILLA EN PERSPECTIVA (piso 3D del hero)
+   ========================================================= */
+@keyframes grid-flow {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    /* Un cuadro completo: el loop es invisible porque termina donde empieza. */
+    background-position: 0 60px;
+  }
+}
+
+.perspective-grid {
+  /* 0.55 es el punto donde la rejilla se percibe sobre el fondo casi negro
+     sin competir con el texto. Por debajo de ~0.4 deja de leerse. */
+  background-image:
+    linear-gradient(to right, rgba(47, 107, 255, 0.55) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 58, 237, 0.55) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-flow 3.2s linear infinite;
+  /* Se desvanece hacia el horizonte para que no corte en seco. */
+  mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 50%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 50%, transparent 92%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .perspective-grid {
+    animation: none;
+  }
+}

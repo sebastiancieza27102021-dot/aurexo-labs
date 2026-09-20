@@ -30,6 +30,7 @@ import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/Button";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { TiltCard } from "@/components/ui/TiltCard";
+import { Reveal3D } from "@/components/ui/Reveal3D";
 import { whatsappLink, whatsappMessages } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -575,14 +576,12 @@ function OtherServiceCard({
 }) {
   const Icon = service.icon;
   return (
-    <SpotlightCard
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: idx * 0.08 }}
-      spotlightColor="rgba(124,58,237,0.16)"
-      className="glass glass-hover flex h-full flex-col p-7"
-    >
+    // Reveal3D pone la entrada inclinada; SpotlightCard, el glow en hover.
+    <Reveal3D delay={idx * 0.07} className="h-full">
+      <SpotlightCard
+        spotlightColor="rgba(124,58,237,0.16)"
+        className="glass glass-hover flex h-full flex-col p-7"
+      >
       <div className="grid size-12 place-items-center rounded-xl border border-border bg-white/[0.04] text-accent-violet">
         <Icon className="size-5" />
       </div>
@@ -621,8 +620,9 @@ function OtherServiceCard({
         >
           {service.ctaLabel}
         </ButtonLink>
-      </div>
-    </SpotlightCard>
+        </div>
+      </SpotlightCard>
+    </Reveal3D>
   );
 }
 

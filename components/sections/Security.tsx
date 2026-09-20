@@ -5,6 +5,7 @@ import { Lock, KeyRound, EyeOff, Download, FileSignature } from "lucide-react";
 import type { ComponentType } from "react";
 import { Section } from "@/components/ui/Section";
 import { TiltCard, TiltLayer } from "@/components/ui/TiltCard";
+import { Reveal3D } from "@/components/ui/Reveal3D";
 
 interface Commitment {
   icon: ComponentType<{ className?: string }>;
@@ -105,24 +106,23 @@ export function Security() {
             {commitments.map((c, i) => {
               const Icon = c.icon;
               return (
-                <motion.li
-                  key={c.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.4, delay: i * 0.07 }}
-                  className="glass glass-hover flex gap-3.5 p-5"
-                >
-                  <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl border border-border bg-white/[0.04] text-accent">
-                    <Icon className="size-4" />
-                  </span>
-                  <div>
-                    <h3 className="text-sm font-semibold tracking-tight">
-                      {c.title}
-                    </h3>
-                    <p className="mt-1.5 text-sm text-muted">{c.description}</p>
-                  </div>
-                </motion.li>
+                <li key={c.title}>
+                  <Reveal3D delay={i * 0.07} angle={10} className="h-full">
+                    <div className="glass glass-hover flex h-full gap-3.5 p-5">
+                      <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl border border-border bg-white/[0.04] text-accent">
+                        <Icon className="size-4" />
+                      </span>
+                      <div>
+                        <h3 className="text-sm font-semibold tracking-tight">
+                          {c.title}
+                        </h3>
+                        <p className="mt-1.5 text-sm text-muted">
+                          {c.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Reveal3D>
+                </li>
               );
             })}
           </ul>
