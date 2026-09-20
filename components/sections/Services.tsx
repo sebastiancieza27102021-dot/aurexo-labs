@@ -31,6 +31,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { Reveal3D } from "@/components/ui/Reveal3D";
+import { VideoLoop } from "@/components/ui/VideoLoop";
 import { whatsappLink, whatsappMessages } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -306,54 +307,6 @@ function FlagshipAgentesMedida() {
 }
 
 /* ============================================================
-   Ilustración: grilla de hoja de cálculo "tocada" por la IA
-   ============================================================ */
-const hotCells = new Set(["0-5", "1-2", "1-4", "2-1", "3-3"]);
-
-function SpreadsheetIllustration() {
-  const cols = 6;
-  const rows = 4;
-
-  return (
-    <div className="grid grid-cols-6 gap-1.5">
-      {Array.from({ length: rows }).flatMap((_, r) =>
-        Array.from({ length: cols }).map((_, c) => {
-          const key = `${r}-${c}`;
-          const isHot = hotCells.has(key);
-          return (
-            <motion.div
-              key={key}
-              initial={{ opacity: 0, scale: 0.6 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: (r * cols + c) * 0.02 }}
-              className={cn(
-                "aspect-square overflow-hidden rounded-md border",
-                isHot
-                  ? "border-accent-violet/50 bg-accent-violet/15"
-                  : "border-border bg-white/[0.02]"
-              )}
-            >
-              {isHot && (
-                <motion.div
-                  animate={{ opacity: [0.35, 1, 0.35] }}
-                  transition={{
-                    duration: 1.8,
-                    repeat: Infinity,
-                    delay: (r + c) * 0.15,
-                  }}
-                  className="h-full w-full bg-accent-violet/40"
-                />
-              )}
-            </motion.div>
-          );
-        })
-      )}
-    </div>
-  );
-}
-
-/* ============================================================
    3) IA para Excel y CRM
    ============================================================ */
 function ExcelCrmService() {
@@ -418,7 +371,21 @@ function ExcelCrmService() {
 
         <div className="lg:col-span-5">
           <div className="glass h-full p-5">
-            <SpreadsheetIllustration />
+            {/*
+              El video es de fondo claro y el sitio es oscuro: el marco con
+              borde y el velo en los bordes evitan que parezca un recorte
+              pegado encima.
+            */}
+            <div className="relative overflow-hidden rounded-xl border border-border bg-black/40">
+              <div className="aspect-video">
+                <VideoLoop
+                  src="/excel-crm.mp4"
+                  poster="/excel-crm-poster.jpg"
+                />
+              </div>
+              <div className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_40px_rgba(5,6,10,0.55)]" />
+            </div>
+
             <div className="mt-5 flex items-center gap-2 text-xs font-medium text-muted">
               <Table2 className="size-3.5 text-accent-violet" />
               Ideal si tu equipo usa
